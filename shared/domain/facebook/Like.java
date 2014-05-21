@@ -10,7 +10,6 @@ public class Like implements Serializable{
 	private List<Data> data;
 
 	public List<Data> getData() {
-		String s;
 		return data;
 	}
 
