@@ -1,8 +1,6 @@
 package gossapp.client.services;
 
 
-import gossapp.shared.domain.facebook.FacebookFriends;
-
 
 import gossapp.shared.domain.facebook.FacebookPhoto;
 
