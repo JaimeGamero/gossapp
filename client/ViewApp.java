@@ -7,14 +7,15 @@ import gossapp.client.services.InstagramAuthenticatedServiceAsync;
 import gossapp.client.services.TwitterAuthenticatedService;
 import gossapp.client.services.TwitterAuthenticatedServiceAsync;
 import gossapp.shared.domain.facebook.Data;
-import gossapp.shared.domain.facebook.FaceData;
-import gossapp.shared.domain.facebook.FaceFeed;
+import gossapp.shared.domain.facebook.FacebookPhoto;
+import gossapp.shared.domain.facebook.Images;
 import gossapp.shared.domain.instaFeed.FeedData;
 import gossapp.shared.domain.instaFeed.InstaFeed;
 import gossapp.shared.domain.facebook.FacebookFriends;
 import gossapp.shared.domain.instaInfo.InstaInfo;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import com.google.api.gwt.oauth2.client.Auth;
@@ -163,7 +164,7 @@ public class ViewApp extends Composite {
 
 			public void onClick(ClickEvent event) {
 				final AuthRequest req = new AuthRequest(FACEBOOKAUTH_URL,
-						FACEBOOKCLIENT_ID).withScopes(FACEBOOK_SCOPE);
+						FACEBOOKCLIENT_ID).withScopes(FACEBOOK_SCOPE_PHOTOS);
 				AUTH.login(req, new Callback<String, Throwable>() {
 
 					@Override
@@ -181,35 +182,35 @@ public class ViewApp extends Composite {
 			}
 		});
 
-		Button botonComent = new Button("Lista de Amigos");
-		botonComent.addStyleName("btnComment");
-		botonComent.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				if (labelAccessTokenFace.getText() == "")
-					Window.alert("Please, login before getting post with more likes");
-				else {
-					facebookService.findFriends(labelAccessTokenFace.getText(),
-							new AsyncCallback<FacebookFriends>() {
-
-								@Override
-								public void onSuccess(FacebookFriends result) {
-									showFriends(result);
-								}
-
-								@Override
-								public void onFailure(Throwable caught) {
-
-								}
-							});
-				}
-			}
-		});
+//		Button botonComent = new Button("Lista de Amigos");
+//		botonComent.addStyleName("btnComment");
+//		botonComent.addClickHandler(new ClickHandler() {
+//
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				if (labelAccessTokenFace.getText() == "")
+//					Window.alert("Please, login before getting post with more likes");
+//				else {
+//					facebookService.findFriends(labelAccessTokenFace.getText(),
+//							new AsyncCallback<FacebookFriends>() {
+//
+//								@Override
+//								public void onSuccess(FacebookFriends result) {
+//									showFriends(result);
+//								}
+//
+//								@Override
+//								public void onFailure(Throwable caught) {
+//
+//								}
+//							});
+//				}
+//			}
+//		});
 //////////////////////////////////////////////////////////////////////
 		Button botonPrueba = new Button("Prueba");
-		botonComent.addStyleName("btnComment");
-		botonComent.addClickHandler(new ClickHandler() {
+		botonPrueba.addStyleName("btnComment");
+		botonPrueba.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
@@ -217,17 +218,20 @@ public class ViewApp extends Composite {
 					Window.alert("Please, login before getting Friends List");
 				else {
 					////////////////////////////////////////
-					facebookService.feedFacebook(labelAccessTokenFace.getText(),
-							new AsyncCallback<FaceFeed>() {
+					facebookService.findPhoto(labelAccessTokenFace.getText(),
+							new AsyncCallback<FacebookPhoto>() {
 
-								@Override
-								public void onSuccess(FaceFeed result) {
-									showFeed(result);
-								}
+							
 
 								@Override
 								public void onFailure(Throwable caught) {
 
+								}
+
+								@Override
+								public void onSuccess(FacebookPhoto result) {
+									showFeed(result);
+									
 								}
 							});
 				}
@@ -239,7 +243,6 @@ public class ViewApp extends Composite {
 		logo_face.setStyleName("logo");
 		menuFacebook.add(logo_face);
 		menuFacebook.add(botonLike);
-		menuFacebook.add(botonComent);
 		menuFacebook.add(botonPrueba);
 		menuFacebook.add(labelFB);
 
@@ -416,34 +419,36 @@ public class ViewApp extends Composite {
 		}
 	}
 
-	void showFriends(FacebookFriends result) {
-		String output = "<fieldset>";
-		output += "<legend>Amigos de Facebook</legend>";
-		if (result != null) {
-			for (Data a : result.getData()) {
-				output += "<span>" + a.getName() + "</span><br/>";
-			}
-		} else {
-			output = "<span> No tienes Amigos!!! -> Es bastante triste :( </span>";
-		}
-		output += "</fieldset>";
-		HTML friends = new HTML(output);
-		menuFacebook.add(friends);
-	}
+//	void showFriends(FacebookFriends result) {
+//		String output = "<fieldset>";
+//		output += "<legend>Amigos de Facebook</legend>";
+//		if (result != null) {
+//			for (Data a : result.getData()) {
+//				output += "<span>" + a.getName() + "</span><br/>";
+//			}
+//		} else {
+//			output = "<span> No tienes Amigos!!! -> Es bastante triste :( </span>";
+//		}
+//		output += "</fieldset>";
+//		HTML friends = new HTML(output);
+//		menuFacebook.add(friends);
+//	}
 	
-	void showFeed(FaceFeed result){
+	void showFeed(FacebookPhoto result){
 		String output = "<fieldset>";
 		output += "<legend>Feed</legend>";
 		Integer max = 0;
-		FaceData feedQueremos = null;
 		if (result != null) {
-			for(FaceData f: result.getData()){
-				if(f.getPicture()!= null && f.getLikes().size() > max){
-					feedQueremos = f;
-					output += "<img src=\"" + feedQueremos.getPicture() + "\"/>";
-				}		
+			try{
+			for(Data d: result.getData()){
+				List<Images> l = d.getImages();
+				Images a = l.get(0);
+					output += "<img width='640' class='imgRes' src='"+a.getSource()+"'>";
+						
 			}
-			
+			}catch(Exception e){
+				output += "ERROR, TIRA EL PORTATIL";
+			}
 		}else{
 			output = "<span> No tienes fotos!!! -> Es bastante aburrido :( </span>";
 		}

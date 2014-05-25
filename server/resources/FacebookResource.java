@@ -6,7 +6,7 @@ import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
 
 public class FacebookResource {
-	private String uri = "https://graph.facebook.com/v2.0/me/feed?type=uploaded";
+	private String uri = "https://graph.facebook.com/v2.0/me/photos?type=uploaded";
 	private String access_token = null;
 	
 	
