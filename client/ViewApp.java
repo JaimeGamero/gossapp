@@ -8,6 +8,7 @@ import gossapp.client.services.TwitterAuthenticatedService;
 import gossapp.client.services.TwitterAuthenticatedServiceAsync;
 import gossapp.shared.domain.facebook.Data;
 import gossapp.shared.domain.facebook.FacebookPhoto;
+import gossapp.shared.domain.facebookLikes.*;
 import gossapp.shared.domain.facebook.Images;
 import gossapp.shared.domain.instaFeed.FeedData;
 import gossapp.shared.domain.instaFeed.InstaFeed;
@@ -243,7 +244,7 @@ public class ViewApp extends Composite {
 
 									@Override
 									public void onSuccess(FacebookPhoto result) {
-										
+										Window.alert("funciona");
 										showFeed(result);
 										botonTwitter2.setVisible(true);
 										botonFace2.setVisible(true);
@@ -464,7 +465,9 @@ public class ViewApp extends Composite {
 		String error= "";
 		try{
 			for(Data d : result.getData()){
+				Window.alert("funciona1");
 				if(d.getLikes().getData().size()>likes){
+					Window.alert("funciona2");
 					likes = d.getLikes().getData().size();
 					for(Images i : d.getImages()){
 						img = i.getSource();
@@ -472,7 +475,7 @@ public class ViewApp extends Composite {
 					}
 				}
 			}
-			
+			Window.alert("funciona aqui");
 		}catch(Exception e){
 			error = "No se ha podido realizar la operacion";
 		}
