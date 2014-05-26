@@ -9,7 +9,7 @@ import org.restlet.resource.ResourceException;
 
 public class FacebookResource {
 
-	private String uri = "https://graph.facebook.com/v2.0/me/photos?type=uploaded";
+	private String uri = "https://graph.facebook.com/me/friends";
 
 	private String uriShare = "https://graph.facebook.com/v2.0/me/feed";
 	private String uriPhoto = "https://graph.facebook.com/v2.0/me/photos?fields=id,name,images,likes,comments&type=uploaded&limit=200";

@@ -2,9 +2,7 @@ package gossapp.server;
 
 
 import gossapp.client.services.FacebookAuthenticatedService;
-import gossapp.server.resources.FacebookFriendsResource;
 import gossapp.server.resources.FacebookResource;
-import gossapp.shared.domain.facebook.FacebookFriends;
 import gossapp.shared.domain.facebook.FacebookPhoto;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;

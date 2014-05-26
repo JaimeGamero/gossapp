@@ -11,11 +11,9 @@ import gossapp.shared.domain.facebook.FacebookPhoto;
 import gossapp.shared.domain.facebook.Images;
 import gossapp.shared.domain.instaFeed.FeedData;
 import gossapp.shared.domain.instaFeed.InstaFeed;
-import gossapp.shared.domain.facebook.FacebookFriends;
 import gossapp.shared.domain.instaInfo.InstaInfo;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import com.google.api.gwt.oauth2.client.Auth;
@@ -67,6 +65,11 @@ public class ViewApp extends Composite {
 	private Button botonTwitter = new Button("Compartir en Twitter");
 	private Button botonFace = new Button("Compartir en Facebook");
 	private FlowPanel fotos = new FlowPanel();
+	private HTML res = new HTML("");
+	private FlowPanel fotosFace = new FlowPanel();
+	private String post = "";
+	private String tipoPublicacion = "";
+	private String redSocial = "";
 
 	public ViewApp(Map<String, String> params) {
 		// Parámetros para registro en Facebook
@@ -434,28 +437,62 @@ public class ViewApp extends Composite {
 //		menuFacebook.add(friends);
 //	}
 	
-	void showFeed(FacebookPhoto result){
-		String output = "<fieldset>";
-		output += "<legend>Feed</legend>";
-		Integer max = 0;
-		if (result != null) {
-			try{
-			for(Data d: result.getData()){
-				List<Images> l = d.getImages();
-				Images a = l.get(0);
-					output += "<img width='640' class='imgRes' src='"+a.getSource()+"'>";
-						
+	void showFeed(FacebookPhoto photo){
+//		String output = "<fieldset>";
+//		output += "<legend>Feed</legend>";
+//		Integer max = 0;
+//		if (result != null) {
+//			try{
+//			for(Data d: result.getData()){
+//				List<Images> l = d.getImages();
+//				Images a = l.get(0);
+//					output += "<img width='640' class='imgRes' src='"+a.getSource()+"'>";
+//						
+//			}
+//			}catch(Exception e){
+//				output += "ERROR, TIRA EL PORTATIL";
+//			}
+//		}else{
+//			output = "<span> No tienes fotos!!! -> Es bastante aburrido :( </span>";
+//		}
+//		output+= "</fieldset>";
+//				HTML feed = new HTML(output);
+//		menuFacebook.add(feed);
+//	}
+		String img = "";
+		Integer likes = 0;
+		String error= "";
+		try{
+			for(Data d : photo.getData()){
+				if(d.getLikes().getData().size()>likes){
+					likes = d.getLikes().getData().size();
+					for(Images i : d.getImages()){
+						img = i.getSource();
+						break;
+					}
+				}
 			}
-			}catch(Exception e){
-				output += "ERROR, TIRA EL PORTATIL";
-			}
-		}else{
-			output = "<span> No tienes fotos!!! -> Es bastante aburrido :( </span>";
+			
+		}catch(Exception e){
+			error = "No se ha podido realizar la operacion";
 		}
-		output+= "</fieldset>";
-				HTML feed = new HTML(output);
-		menuFacebook.add(feed);
+		
+		String photoRes = "<span><h2>Esta es tu foto con mas likes con "+likes+" likes:</h2></span>";
+		photoRes+="<img width='640' class='imgRes' src='"+img+"'>";
+		
+		res = new HTML(photoRes);
+		fotosFace.add(res);
 	}
+	
+	String share(){
+		String resultado = "Esta es mi foto con más "+tipoPublicacion+" en "+redSocial+": ";
+		
+		resultado+=this.post;
+		
+		return resultado;
+	}
+	
+	
 
 	void showInfo(InstaInfo result) {
 		String output = "<fieldset>";
