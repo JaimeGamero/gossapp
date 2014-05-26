@@ -67,16 +67,16 @@ public class ViewApp extends Composite {
 	private FlowPanel fotos = new FlowPanel();
 	private HTML res = new HTML("");
 	private FlowPanel fotosFace = new FlowPanel();
-<<<<<<< HEAD
+
 	private String post = "";
 	private String tipoPublicacion = "";
 	private String redSocial = "";
 
-=======
+
 	private Button botonTwitter2 = new Button("Compartir en Twitter");
 	private Button botonFace2 = new Button("Compartir en Facebook");
 	
->>>>>>> e0a1b3631478c4157433de7bbadf15f09813ded6
+
 	public ViewApp(Map<String, String> params) {
 		// Parámetros para registro en Facebook
 		final String FACEBOOKAUTH_URL = "https://www.facebook.com/dialog/oauth";
@@ -465,41 +465,19 @@ public class ViewApp extends Composite {
 //		menuFacebook.add(friends);
 //	}
 	
-<<<<<<< HEAD
-	void showFeed(FacebookPhoto photo){
-//		String output = "<fieldset>";
-//		output += "<legend>Feed</legend>";
-//		Integer max = 0;
-//		if (result != null) {
-//			try{
-//			for(Data d: result.getData()){
-//				List<Images> l = d.getImages();
-//				Images a = l.get(0);
-//					output += "<img width='640' class='imgRes' src='"+a.getSource()+"'>";
-//						
-//			}
-//			}catch(Exception e){
-//				output += "ERROR, TIRA EL PORTATIL";
-//			}
-//		}else{
-//			output = "<span> No tienes fotos!!! -> Es bastante aburrido :( </span>";
-//		}
-//		output+= "</fieldset>";
-//				HTML feed = new HTML(output);
-//		menuFacebook.add(feed);
-//	}
-=======
+
+
 	void showFeed(FacebookPhoto result){
->>>>>>> e0a1b3631478c4157433de7bbadf15f09813ded6
+
 		String img = "";
 		Integer likes = 0;
 		String error= "";
 		try{
-<<<<<<< HEAD
-			for(Data d : photo.getData()){
-=======
+
+			
+
 			for(Data d : result.getData()){
->>>>>>> e0a1b3631478c4157433de7bbadf15f09813ded6
+
 				if(d.getLikes().getData().size()>likes){
 					likes = d.getLikes().getData().size();
 					for(Images i : d.getImages()){
@@ -513,16 +491,14 @@ public class ViewApp extends Composite {
 			error = "No se ha podido realizar la operacion";
 		}
 		
-<<<<<<< HEAD
-		String photoRes = "<span><h2>Esta es tu foto con mas likes con "+likes+" likes:</h2></span>";
-=======
+
 		String photoRes = "<span><h2>Esta es tu foto con m&aacute;s likes con "+likes+" likes:</h2></span>";
->>>>>>> e0a1b3631478c4157433de7bbadf15f09813ded6
+
 		photoRes+="<img width='640' class='imgRes' src='"+img+"'>";
 		
 		res = new HTML(photoRes);
 		fotosFace.add(res);
-<<<<<<< HEAD
+
 	}
 	
 	String share(){
@@ -531,8 +507,7 @@ public class ViewApp extends Composite {
 		resultado+=this.post;
 		
 		return resultado;
-=======
->>>>>>> e0a1b3631478c4157433de7bbadf15f09813ded6
+
 	}
 	
 	
