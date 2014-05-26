@@ -68,9 +68,16 @@ public class ViewApp extends Composite {
 	private FlowPanel fotos = new FlowPanel();
 	private HTML res = new HTML("");
 	private FlowPanel fotosFace = new FlowPanel();
+
+	private String post = "";
+	private String tipoPublicacion = "";
+	private String redSocial = "";
+
+
 	private Button botonTwitter2 = new Button("Compartir en Twitter");
 	private Button botonFace2 = new Button("Compartir en Facebook");
 	
+
 	public ViewApp(Map<String, String> params) {
 		// Parámetros para registro en Facebook
 		final String FACEBOOKAUTH_URL = "https://www.facebook.com/dialog/oauth";
@@ -459,13 +466,21 @@ public class ViewApp extends Composite {
 //		menuFacebook.add(friends);
 //	}
 	
+
+
 	void showFeed(FacebookPhoto result){
+
 		String img = "";
 		Integer likes = 0;
 		String error= "";
 		try{
+
+			
+
 			for(Data d : result.getData()){
+
 				Window.alert("funciona1");
+
 				if(d.getLikes().getData().size()>likes){
 					Window.alert("funciona2");
 					likes = d.getLikes().getData().size();
@@ -480,12 +495,26 @@ public class ViewApp extends Composite {
 			error = "No se ha podido realizar la operacion";
 		}
 		
+
 		String photoRes = "<span><h2>Esta es tu foto con m&aacute;s likes con "+likes+" likes:</h2></span>";
+
 		photoRes+="<img width='640' class='imgRes' src='"+img+"'>";
 		
 		res = new HTML(photoRes);
 		fotosFace.add(res);
+
 	}
+	
+	String share(){
+		String resultado = "Esta es mi foto con más "+tipoPublicacion+" en "+redSocial+": ";
+		
+		resultado+=this.post;
+		
+		return resultado;
+
+	}
+	
+	
 
 	void showInfo(InstaInfo result) {
 		String output = "<fieldset>";
