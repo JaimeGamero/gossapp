@@ -67,17 +67,23 @@ public class ViewApp extends Composite {
 	private FlowPanel fotos = new FlowPanel();
 	private HTML res = new HTML("");
 	private FlowPanel fotosFace = new FlowPanel();
+<<<<<<< HEAD
 	private String post = "";
 	private String tipoPublicacion = "";
 	private String redSocial = "";
 
+=======
+	private Button botonTwitter2 = new Button("Compartir en Twitter");
+	private Button botonFace2 = new Button("Compartir en Facebook");
+	
+>>>>>>> e0a1b3631478c4157433de7bbadf15f09813ded6
 	public ViewApp(Map<String, String> params) {
 		// Parámetros para registro en Facebook
 		final String FACEBOOKAUTH_URL = "https://www.facebook.com/dialog/oauth";
 		final String FACEBOOKCLIENT_ID = "1479269382295100";
-		final String FACEBOOK_SCOPE = "read_stream";
+//		final String FACEBOOK_SCOPE = "read_stream";
 		final String FACEBOOK_SCOPE_PHOTOS = "user_photos";
-		final String FACEBOOK_SCOPE_PUBLISHED = "publish_";
+//		final String FACEBOOK_SCOPE_PUBLISHED = "publish_";
 		// Parámentros para registro en Instagram
 		final String INSTAGRAM_ID = "d748330bec874eafbc13498f87ee30e0";
 		final String REDIRECT_URI = "http://goss-app.appspot.com/pruebas/oauthWindow.html";
@@ -164,8 +170,13 @@ public class ViewApp extends Composite {
 		Button botonLike = new Button("Iniciar Sesi&oacuten");
 		botonLike.addStyleName("btnLike");
 		botonLike.addClickHandler(new ClickHandler() {
-
+			
+			
+			
 			public void onClick(ClickEvent event) {
+				
+
+				
 				final AuthRequest req = new AuthRequest(FACEBOOKAUTH_URL,
 						FACEBOOKCLIENT_ID).withScopes(FACEBOOK_SCOPE_PHOTOS);
 				AUTH.login(req, new Callback<String, Throwable>() {
@@ -216,28 +227,45 @@ public class ViewApp extends Composite {
 		botonPrueba.addClickHandler(new ClickHandler() {
 
 			@Override
-			public void onClick(ClickEvent event) {
-				if (labelAccessTokenFace.getText() == "")
-					Window.alert("Please, login before getting Friends List");
-				else {
-					////////////////////////////////////////
-					facebookService.findPhoto(labelAccessTokenFace.getText(),
-							new AsyncCallback<FacebookPhoto>() {
+		public void onClick(ClickEvent event) {
+				
+				fotosFace.clear();
+				
+				
+				final AuthRequest req = new AuthRequest(FACEBOOKAUTH_URL,
+						FACEBOOKCLIENT_ID).withScopes(FACEBOOK_SCOPE_PHOTOS);
+				AUTH.login(req, new Callback<String, Throwable>() {
 
+					@Override
+					public void onSuccess(String result) {
+						labelAccessTokenFace.setText(result);
+						facebookService.findPhoto(labelAccessTokenFace.getText(),
+								new AsyncCallback<FacebookPhoto>(){
+
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
+										Window.alert("no funciona");
+									}
+
+									@Override
+									public void onSuccess(FacebookPhoto result) {
+										
+										showFeed(result);
+										botonTwitter2.setVisible(true);
+										botonFace2.setVisible(true);
+									}
 							
+						});
 
-								@Override
-								public void onFailure(Throwable caught) {
+					}
 
-								}
+					@Override
+					public void onFailure(Throwable reason) {
 
-								@Override
-								public void onSuccess(FacebookPhoto result) {
-									showFeed(result);
-									
-								}
-							});
-				}
+					}
+				});
+
 			}
 		});
 		Image logo_face = new Image();
@@ -437,6 +465,7 @@ public class ViewApp extends Composite {
 //		menuFacebook.add(friends);
 //	}
 	
+<<<<<<< HEAD
 	void showFeed(FacebookPhoto photo){
 //		String output = "<fieldset>";
 //		output += "<legend>Feed</legend>";
@@ -459,11 +488,18 @@ public class ViewApp extends Composite {
 //				HTML feed = new HTML(output);
 //		menuFacebook.add(feed);
 //	}
+=======
+	void showFeed(FacebookPhoto result){
+>>>>>>> e0a1b3631478c4157433de7bbadf15f09813ded6
 		String img = "";
 		Integer likes = 0;
 		String error= "";
 		try{
+<<<<<<< HEAD
 			for(Data d : photo.getData()){
+=======
+			for(Data d : result.getData()){
+>>>>>>> e0a1b3631478c4157433de7bbadf15f09813ded6
 				if(d.getLikes().getData().size()>likes){
 					likes = d.getLikes().getData().size();
 					for(Images i : d.getImages()){
@@ -477,11 +513,16 @@ public class ViewApp extends Composite {
 			error = "No se ha podido realizar la operacion";
 		}
 		
+<<<<<<< HEAD
 		String photoRes = "<span><h2>Esta es tu foto con mas likes con "+likes+" likes:</h2></span>";
+=======
+		String photoRes = "<span><h2>Esta es tu foto con m&aacute;s likes con "+likes+" likes:</h2></span>";
+>>>>>>> e0a1b3631478c4157433de7bbadf15f09813ded6
 		photoRes+="<img width='640' class='imgRes' src='"+img+"'>";
 		
 		res = new HTML(photoRes);
 		fotosFace.add(res);
+<<<<<<< HEAD
 	}
 	
 	String share(){
@@ -490,6 +531,8 @@ public class ViewApp extends Composite {
 		resultado+=this.post;
 		
 		return resultado;
+=======
+>>>>>>> e0a1b3631478c4157433de7bbadf15f09813ded6
 	}
 	
 	
